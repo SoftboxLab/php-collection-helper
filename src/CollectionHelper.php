@@ -78,13 +78,6 @@ class CollectionHelper
         return $reduced;
     }
 
-    private static function isCallableOrThrowException($param)
-    {
-        if (!is_callable($param)) {
-            throw new BadMethodCallException('Should inform a callable parameter');
-        }
-    }
-
     /**
      * Transform an array changing the the keys by the given key-value pair.
      *
@@ -130,5 +123,17 @@ class CollectionHelper
         }
 
         return static::$transformerCache[$key];
+    }
+
+    /**
+     * Helper function to detect the the given callback is callable.
+     *
+     * @param $param
+     */
+    private static function isCallableOrThrowException($param)
+    {
+        if (!is_callable($param)) {
+            throw new BadMethodCallException('Should inform a callable parameter');
+        }
     }
 }
