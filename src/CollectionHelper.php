@@ -11,16 +11,21 @@ class CollectionHelper
      * Simply apply a map over an array.
      * @param array $data
      * @param callable $callback
+     * @param bool $keepKeys
      * @return array
      */
-    public static function map(array $data, $callback)
+    public static function map(array $data, $callback, $keepKeys = true)
     {
         static::isCallableOrThrowException($callback);
 
         $tmp = array();
 
         foreach ($data as $key => $value) {
-            $tmp[] = $callback($value, $key);
+            $tmp[$key] = $callback($value, $key);
+        }
+
+        if (!$keepKeys) {
+            return array_values($tmp);
         }
 
         return $tmp;
