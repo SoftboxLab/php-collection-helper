@@ -39,7 +39,7 @@ Example:
 
 ```php
 $transformer = new Transformer(['namae' => 'nombre']);
-$data = ['name' => 'William'];
+$data = ['namae' => 'William'];
 $transformedData = $transformer->transform($data);
 
 print_r($transformedData); // ['nombre' => 'William'];
