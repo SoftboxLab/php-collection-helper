@@ -29,11 +29,12 @@ class Collection
      * Applies filter over the Collection. Returns a new one.
      *
      * @param callable $callback
+     * @param bool $keepKeys
      * @return static
      */
-    public function filter($callback)
+    public function filter($callback, $keepKeys = true)
     {
-        return new static(CollectionHelper::filter($this->data, $callback));
+        return new static(CollectionHelper::filter($this->data, $callback, $keepKeys));
     }
 
     /**
