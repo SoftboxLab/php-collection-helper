@@ -7,6 +7,25 @@ use Softbox\Support\Collection;
 
 class CollectionTest extends TestCase
 {
+    public function testCreationFromCollection()
+    {
+        $data = array(1, 2, 3);
+        $collectionFromArray = new Collection($data);
+        $collectionFromCollection = new Collection($collectionFromArray);
+
+        $this->assertInstanceOf(Collection::class, $collectionFromCollection);
+        $this->assertEquals(array(1, 2, 3), $collectionFromCollection->all());
+    }
+
+    public function testCreationFromJsonSerializable()
+    {
+        $jsonSerializableData = new JsonSerializableClass(array(1, 2, 3, 4));
+        $collection = new Collection($jsonSerializableData);
+
+        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertEquals(array(1, 2, 3, 4), $collection->all());
+    }
+
     /**
      * @test
      */

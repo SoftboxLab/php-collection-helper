@@ -17,7 +17,7 @@
     "autoload": {
         "psr-4": {
             "Softbox\\Support\\": "src/",
-            "Softbox\\Support\\Test\\": "tests"
+            "Softbox\\Support\\Tests\\": "tests"
         }
     }
 }
