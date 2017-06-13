@@ -28,7 +28,7 @@ class CollectionTest extends TestCase
         $this->assertEquals(array(1, 2, 3, 4), $collection->all());
     }
 
-    public function testeCreationFromTraversable()
+    public function testCreationFromTraversable()
     {
         $traversable = new TraversableClass();
         $collection = new Collection($traversable);
@@ -38,6 +38,19 @@ class CollectionTest extends TestCase
         $this->assertArrayHasKey('property1', $collection->all());
         $this->assertArrayHasKey('property2', $collection->all());
         $this->assertArrayHasKey('property3', $collection->all());
+    }
+
+    public function testCreationFromObject()
+    {
+        $collection = new Collection(new \stdClass());
+        $this->assertInstanceOf(Collection::class, $collection);
+    }
+
+    public function testCreationFromLiteral()
+    {
+        $collection = new Collection("william");
+        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertEquals(array("william"), $collection->all());
     }
 
     /**
