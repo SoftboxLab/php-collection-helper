@@ -108,4 +108,16 @@ class CollectionTest extends TestCase
         $this->assertInstanceOf('Softbox\Support\Collection', $collection);
         $this->assertEquals(array(1, 2, 3, 4, 5, 6), $collection->all());
     }
+
+    public function testChunk()
+    {
+        $data = array(1, 2, 3, 4, 5);
+        $collection = new Collection($data);
+        $chunks = $collection->chunk(3)->all();
+
+        $this->assertEquals(2, count($chunks));
+        $this->assertEquals(array(1, 2, 3), $chunks[0]);
+        $this->assertEquals(array(4, 5), $chunks[1]);
+        $this->assertEquals(array(1, 2, 3, 4, 5), $collection->all());
+    }
 }
