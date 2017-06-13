@@ -1,0 +1,23 @@
+{
+    "name": "softboxlab/php-collection-helper",
+    "description": "Simple array and object-oriented collection",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "William Johnson dos Santos Okano",
+            "email": "williamokano@softbox.com.br"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Softbox\\Support\\": "src/",
+            "Softbox\\Support\\Test\\": "tests"
+        }
+    }
+}
