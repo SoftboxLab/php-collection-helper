@@ -15,7 +15,7 @@ class CollectionTest extends TestCase
         $collectionFromArray = new Collection($data);
         $collectionFromCollection = new Collection($collectionFromArray);
 
-        $this->assertInstanceOf(Collection::class, $collectionFromCollection);
+        $this->assertInstanceOf('Softbox\Support\Collection', $collectionFromCollection);
         $this->assertEquals(array(1, 2, 3), $collectionFromCollection->all());
     }
 
@@ -24,7 +24,7 @@ class CollectionTest extends TestCase
         $jsonSerializableData = new JsonSerializableClass(array(1, 2, 3, 4));
         $collection = new Collection($jsonSerializableData);
 
-        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertInstanceOf('Softbox\Support\Collection', $collection);
         $this->assertEquals(array(1, 2, 3, 4), $collection->all());
     }
 
@@ -33,7 +33,7 @@ class CollectionTest extends TestCase
         $traversable = new TraversableClass();
         $collection = new Collection($traversable);
 
-        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertInstanceOf('Softbox\Support\Collection', $collection);
         $this->assertTrue(is_array($collection->all()));
         $this->assertArrayHasKey('property1', $collection->all());
         $this->assertArrayHasKey('property2', $collection->all());
@@ -43,13 +43,13 @@ class CollectionTest extends TestCase
     public function testCreationFromObject()
     {
         $collection = new Collection(new \stdClass());
-        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertInstanceOf('Softbox\Support\Collection', $collection);
     }
 
     public function testCreationFromLiteral()
     {
         $collection = new Collection("william");
-        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertInstanceOf('Softbox\Support\Collection', $collection);
         $this->assertEquals(array("william"), $collection->all());
     }
 
