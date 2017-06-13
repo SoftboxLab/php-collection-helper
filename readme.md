@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/SoftboxLab/php-collection-helper.svg?branch=master)](https://travis-ci.org/SoftboxLab/php-collection-helper)
+[![codecov](https://codecov.io/gh/SoftboxLab/php-collection-helper/branch/master/graph/badge.svg)](https://codecov.io/gh/SoftboxLab/php-collection-helper)
+
 # Simple PHP Collection and array helper
 Simple collection class to work with arrays on object-oriented paradigm and some array (collection) helpers with padronization of the paraters (data first, callback later, like *javascript*).
 
