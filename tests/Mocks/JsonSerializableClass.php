@@ -1,5 +1,5 @@
 <?php
-namespace Softbox\Support\Tests;
+namespace Softbox\Support\Tests\Mocks;
 
 use JsonSerializable;
 

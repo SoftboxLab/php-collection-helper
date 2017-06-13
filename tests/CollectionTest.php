@@ -4,6 +4,8 @@ namespace Softbox\Support\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Softbox\Support\Collection;
+use Softbox\Support\Tests\Mocks\JsonSerializableClass;
+use Softbox\Support\Tests\Mocks\TraversableClass;
 
 class CollectionTest extends TestCase
 {
@@ -24,6 +26,18 @@ class CollectionTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $collection);
         $this->assertEquals(array(1, 2, 3, 4), $collection->all());
+    }
+
+    public function testeCreationFromTraversable()
+    {
+        $traversable = new TraversableClass();
+        $collection = new Collection($traversable);
+
+        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertTrue(is_array($collection->all()));
+        $this->assertArrayHasKey('property1', $collection->all());
+        $this->assertArrayHasKey('property2', $collection->all());
+        $this->assertArrayHasKey('property3', $collection->all());
     }
 
     /**
