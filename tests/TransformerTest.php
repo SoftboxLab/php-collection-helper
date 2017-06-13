@@ -40,4 +40,21 @@ class TransformerTest extends TestCase
         $this->assertArrayHasKey('nome', $transformedData['person']);
         $this->assertEquals('William', $transformedData['person']['nome']);
     }
+
+    public function testTransformWithAnotherDelimiter()
+    {
+        $data = array(
+            'my.name' => 'William',
+            'my' => array(
+                'name' => 'Okano'
+            )
+        );
+
+        $transformer = new Transformer(array('my.name' => 'meu.nome', 'my#name' => 'meu#nome'), '#');
+        $transformedData = $transformer->transform($data);
+
+        $this->assertArrayHasKey('meu.nome', $transformedData);
+        $this->assertArrayHasKey('meu', $transformedData);
+        $this->assertArrayHasKey('nome', $transformedData['meu']);
+    }
 }
