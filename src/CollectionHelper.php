@@ -79,6 +79,19 @@ class CollectionHelper
     }
 
     /**
+     * Chunk the array with the given size.
+     *
+     * @param array $data
+     * @param $chunkSize
+     * @param bool $keepKeys
+     * @return array
+     */
+    public static function chunk(array $data, $chunkSize, $keepKeys = false)
+    {
+        return array_chunk($data, $chunkSize, $keepKeys);
+    }
+
+    /**
      * Transform an array changing the the keys by the given key-value pair.
      *
      * @param array $data

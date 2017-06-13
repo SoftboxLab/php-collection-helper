@@ -14,16 +14,67 @@ class Collection
         $this->data = $this->arrayfy($data);
     }
 
+    /**
+     * Applies map over the Collection. Returns a new one.
+     *
+     * @param callable $callback
+     * @return static
+     */
     public function map($callback)
     {
         return new static(CollectionHelper::map($this->data, $callback));
     }
 
+    /**
+     * Applies filter over the Collection. Returns a new one.
+     *
+     * @param callable $callback
+     * @return static
+     */
+    public function filter($callback)
+    {
+        return new static(CollectionHelper::filter($this->data, $callback));
+    }
+
+    /**
+     * Applies reduce over the Collection. Returns a new one.
+     *
+     * @param $callback
+     * @return static
+     */
+    public function reduce($callback)
+    {
+        return new static(CollectionHelper::reduce($this->data, $callback));
+    }
+
+    /**
+     * Applies chunk over the Collection. Returns a new one.
+     *
+     * @param $chunkSize
+     * @param bool $keepKeys
+     * @return static
+     */
+    public function chunk($chunkSize, $keepKeys = false)
+    {
+        return new static(CollectionHelper::chunk($this->data, $chunkSize, $keepKeys));
+    }
+
+    /**
+     * Return the data of the Collection.
+     *
+     * @return array
+     */
     public function all()
     {
         return $this->data;
     }
 
+    /**
+     * Tries to convert any given data into some type of array somehow.
+     *
+     * @param $data
+     * @return array|mixed
+     */
     private function arrayfy($data)
     {
         if (is_array($data)) {
