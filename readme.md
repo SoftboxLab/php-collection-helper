@@ -2,7 +2,7 @@
 [![codecov](https://codecov.io/gh/SoftboxLab/php-collection-helper/branch/master/graph/badge.svg)](https://codecov.io/gh/SoftboxLab/php-collection-helper)
 
 # Simple PHP Collection and array helper
-Simple collection class to work with arrays on object-oriented paradigm and some array (collection) helpers with padronization of the paraters (data first, callback later, like *javascript*).
+Simple collection class to work with arrays on object-oriented paradigm and some array (collection) helpers with standardization of the parameters (data first, callback later, like *javascript*).
 
 ## Collection
 In this definition, our collection is *Immutable*, which means that *every* operation should return a new collection, keeping the original collection intact.
