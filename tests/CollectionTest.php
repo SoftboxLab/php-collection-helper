@@ -87,4 +87,25 @@ class CollectionTest extends TestCase
         $this->assertNotEquals(array(1, 3), $collection->all());
         $this->assertNotEquals($odds, $data);
     }
+
+    public function testReduce()
+    {
+        $data = array(1, 2, 3, 4, 5, 6);
+        $collection = new Collection($data);
+
+        $reducedData = $collection
+            ->filter(function ($item) {
+                return $item % 2 == 0;
+            })
+            ->map(function ($item) {
+                return $item * 2;
+            })
+            ->reduce(function ($acc, $other) {
+                return $acc + $other;
+            })
+        ;
+        $this->assertEquals(24, $reducedData);
+        $this->assertInstanceOf('Softbox\Support\Collection', $collection);
+        $this->assertEquals(array(1, 2, 3, 4, 5, 6), $collection->all());
+    }
 }

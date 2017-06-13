@@ -45,7 +45,7 @@ class Collection
      */
     public function reduce($callback)
     {
-        return new static(CollectionHelper::reduce($this->data, $callback));
+        return CollectionHelper::reduce($this->data, $callback);
     }
 
     /**
