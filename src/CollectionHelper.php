@@ -26,7 +26,7 @@ class CollectionHelper
         return $tmp;
     }
 
-    public static function filter(array $data, $callback)
+    public static function filter(array $data, $callback, $keepKeys = true)
     {
         static::isCallableOrThrowException($callback);
 
@@ -36,6 +36,10 @@ class CollectionHelper
             if (!!$callback($value, $key)) {
                 $tmp[$key] = $value;
             }
+        }
+
+        if (!$keepKeys) {
+            return array_values($tmp);
         }
 
         return $tmp;
@@ -61,25 +65,25 @@ class CollectionHelper
         }
     }
 
-    public static function transform(array $data, array $changes)
+    public static function transform(array $data, array $changes, $delimiter = '.')
     {
-        $transformer = static::getTransformer($changes);
+        $transformer = static::getTransformer($changes, $delimiter);
 
         return $transformer->transform($data);
     }
 
-    public static function transformArray(array $data, array $changes)
+    public static function transformArray(array $data, array $changes, $delimiter = '.')
     {
-        $transformer = static::getTransformer($changes);
+        $transformer = static::getTransformer($changes, $delimiter);
 
         return $transformer->transformArray($data);
     }
 
-    private static function getTransformer($changes)
+    private static function getTransformer($changes, $delimiter)
     {
-        $key = md5(json_encode($changes));
+        $key = md5(json_encode($changes)) . $delimiter;
         if (!array_key_exists($key, static::$transformerCache)) {
-            static::$transformerCache[$key] = new Transformer($changes);
+            static::$transformerCache[$key] = new Transformer($changes, $delimiter);
         }
 
         return static::$transformerCache[$key];
