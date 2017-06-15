@@ -82,14 +82,14 @@ class Collection implements JsonSerializable, ArrayAccess, Countable, IteratorAg
      */
     private function arrayfy($data)
     {
-        if (is_array($data)) {
-            return $data;
-        } elseif ($data instanceof self) {
+        if ($data instanceof self) {
             return $data->all();
         } elseif ($data instanceof JsonSerializable) {
             return $data->jsonSerialize();
         } elseif ($data instanceof Traversable) {
             return iterator_to_array($data);
+        } elseif (is_array($data)) {
+            return $data;
         }
 
         return (array)$data;

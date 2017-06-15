@@ -147,4 +147,55 @@ class CollectionTest extends TestCase
             $this->assertEquals(count($originalData), count($collection));
         }
     }
+
+    public function testArrayAccess()
+    {
+        $data = array(
+            array(1, 2, 3, 4),
+            array(
+                'name'         => 'William',
+                'lastname'     => 'Okano',
+                'anotherArray' => array(10, 9, 8, 7, 6),
+            ),
+            (object) array(
+                'name'           => 'William',
+                'weird_property' => 'with weird value',
+            ),
+            new Collection(array(4, 3, 2, 'hello_moto' => 1)),
+        );
+
+        /** @var Collection[] $collections */
+        $collections = array_map(function ($data) {
+            return new Collection($data);
+        }, $data);
+
+        // test get
+        foreach ($collections as $idx => $collection) {
+            if ($data[$idx] instanceof Collection) {
+                $originalData = $data[$idx]->all();
+            } else {
+                $originalData = (array) $data[$idx];
+            }
+            foreach ($originalData as $key => $value) {
+                $this->assertEquals($value, $collection[$key], "Failed at idx $idx and key $key");
+            }
+        }
+
+        // Test unset
+        unset($collections[3][0]);
+        $this->assertEquals(array(
+            1 => 3,
+            2 => 2,
+            'hello_moto' => 1
+        ), $collections[3]->all());
+
+        // test set
+        $collections[3][0] = 4;
+        $this->assertEquals(array(
+            0 => 4,
+            1 => 3,
+            2 => 2,
+            'hello_moto' => 1
+        ), $collections[3]->all());
+    }
 }
