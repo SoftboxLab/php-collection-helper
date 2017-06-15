@@ -5,7 +5,7 @@ namespace Softbox\Support;
 use JsonSerializable;
 use Traversable;
 
-class Collection
+class Collection implements JsonSerializable
 {
     private $data = array();
 
@@ -89,5 +89,21 @@ class Collection
         }
 
         return (array)$data;
+    }
+
+    /**
+     * Implements how the array should be serialized.
+     *
+     * @return mixed
+     */
+    public function jsonSerialize()
+    {
+        return array_map(function ($data) {
+            if ($data instanceof JsonSerializable) {
+                return $data->jsonSerialize();
+            }
+
+            return $data;
+        }, $this->data);
     }
 }

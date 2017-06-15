@@ -18,6 +18,9 @@
         "psr-4": {
             "Softbox\\Support\\": "src/",
             "Softbox\\Support\\Tests\\": "tests"
-        }
+        },
+        "files": [
+            "src/polyfill.php"
+        ]
     }
 }
