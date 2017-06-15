@@ -4,6 +4,7 @@ namespace Softbox\Support\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Softbox\Support\Collection;
+use Softbox\Support\CollectionHelper;
 use Softbox\Support\Tests\Mocks\JsonSerializableClass;
 use Softbox\Support\Tests\Mocks\TraversableClass;
 
@@ -11,8 +12,8 @@ class CollectionTest extends TestCase
 {
     public function testCreationFromCollection()
     {
-        $data = array(1, 2, 3);
-        $collectionFromArray = new Collection($data);
+        $data                     = array(1, 2, 3);
+        $collectionFromArray      = new Collection($data);
         $collectionFromCollection = new Collection($collectionFromArray);
 
         $this->assertInstanceOf('Softbox\Support\Collection', $collectionFromCollection);
@@ -22,7 +23,7 @@ class CollectionTest extends TestCase
     public function testCreationFromJsonSerializable()
     {
         $jsonSerializableData = new JsonSerializableClass(array(1, 2, 3, 4));
-        $collection = new Collection($jsonSerializableData);
+        $collection           = new Collection($jsonSerializableData);
 
         $this->assertInstanceOf('Softbox\Support\Collection', $collection);
         $this->assertEquals(array(1, 2, 3, 4), $collection->all());
@@ -31,7 +32,7 @@ class CollectionTest extends TestCase
     public function testCreationFromTraversable()
     {
         $traversable = new TraversableClass();
-        $collection = new Collection($traversable);
+        $collection  = new Collection($traversable);
 
         $this->assertInstanceOf('Softbox\Support\Collection', $collection);
         $this->assertTrue(is_array($collection->all()));
@@ -58,8 +59,8 @@ class CollectionTest extends TestCase
      */
     public function testMap()
     {
-        $data = array(1, 2, 3, 4);
-        $collection = new Collection($data);
+        $data          = array(1, 2, 3, 4);
+        $collection    = new Collection($data);
         $newCollection = $collection->map(function ($item) {
             return $item * 2;
         });
@@ -73,13 +74,13 @@ class CollectionTest extends TestCase
 
     public function testFilter()
     {
-        $data = array(1, 2, 3, 4);
+        $data       = array(1, 2, 3, 4);
         $collection = new Collection($data);
 
         $filteredCollection = $collection->filter(function ($item) {
             return $item % 2 == 1;
         }, false);
-        $odds = $filteredCollection->all();
+        $odds               = $filteredCollection->all();
 
         $this->assertTrue(is_array($odds));
         $this->assertTrue(!empty($odds));
@@ -90,7 +91,7 @@ class CollectionTest extends TestCase
 
     public function testReduce()
     {
-        $data = array(1, 2, 3, 4, 5, 6);
+        $data       = array(1, 2, 3, 4, 5, 6);
         $collection = new Collection($data);
 
         $reducedData = $collection
@@ -111,13 +112,39 @@ class CollectionTest extends TestCase
 
     public function testChunk()
     {
-        $data = array(1, 2, 3, 4, 5);
+        $data       = array(1, 2, 3, 4, 5);
         $collection = new Collection($data);
-        $chunks = $collection->chunk(3)->all();
+        $chunks     = $collection->chunk(3)->all();
 
         $this->assertEquals(2, count($chunks));
         $this->assertEquals(array(1, 2, 3), $chunks[0]);
         $this->assertEquals(array(4, 5), $chunks[1]);
         $this->assertEquals(array(1, 2, 3, 4, 5), $collection->all());
+    }
+
+    public function testCountable()
+    {
+        $data = array(
+            array(1, 2, 3, 4, 5),
+            array(1, 2, 3),
+            array(),
+            (object) array(
+                'name' => 'William',
+                'age'  => 28,
+            ),
+        );
+
+        /** @var Collection[] $collections */
+        $collections = array_map(function ($data) {
+            return new Collection($data);
+        }, $data);
+
+        foreach ($collections as $key => $collection) {
+            $originalData = (array) $data[$key];
+            $this->assertInstanceOf('Softbox\Support\Collection', $collection);
+            $this->assertEquals($originalData, $collection->all());
+            $this->assertEquals(count($originalData), $collection->count());
+            $this->assertEquals(count($originalData), count($collection));
+        }
     }
 }
